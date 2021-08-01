@@ -1,3 +1,4 @@
+"use strict";
 var reviews = [5, 7, 2, 4, 5.4, 2, 1];
 for (var i = 0; i < reviews.length; i++) {
     console.log(reviews[i]);

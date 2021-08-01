@@ -1,3 +1,4 @@
+"use strict";
 var sportsOne = ["Basketball", "Soccer", "Baseball", "Hockey"];
 console.log("old school for loop");
 for (var i = 0; i < sportsOne.length; i++) {

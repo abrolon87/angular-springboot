@@ -1,3 +1,4 @@
+"use strict";
 var sportsTwo = ["Basketball", "Soccer", "Baseball", "Hockey"];
 sportsTwo.push("Boxing");
 sportsTwo.push("Football");
