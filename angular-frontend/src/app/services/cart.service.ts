@@ -70,4 +70,24 @@ export class CartService {
     );
     console.log('-----');
   }
+
+  decrementQuantity(cartItem: CartItem) {
+    cartItem.quantity--;
+
+    if (cartItem.quantity === 0) {
+      this.removeItemFromCart(cartItem);
+    } else {
+      this.calculateCartTotal();
+    }
+  }
+
+  removeItemFromCart(cartItem: CartItem) {
+    const itemIndex = this.cartItems.findIndex(
+      (item) => item.id === cartItem.id
+    );
+    if (itemIndex > -1) {
+      this.cartItems.splice(itemIndex, 1);
+      this.calculateCartTotal();
+    }
+  }
 }

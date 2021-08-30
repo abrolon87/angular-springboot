@@ -24,7 +24,38 @@
             </td>
             <td>
               <div class="items">
-                <label>Quantity: </label> {{ item.quantity }}
+                <label>Quantity: </label>
+                <div class="row no-gutters">
+                  <div class="col">
+                    <button
+                      (click)="decrementQuantity(item)"
+                      class="btn btn-primary btn-sm"
+                    >
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                  <div class="col ml-4 mr-2">
+                    {{ item.quantity }}
+                  </div>
+                  <div class="col">
+                    <button
+                      (click)="incrementQuantity(item)"
+                      class="btn btn-primary btn-sm"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+
+                  <div class="col-8"></div>
+                </div>
+              </div>
+              <div>
+                <button
+                  (click)="removeItemFromCart(item)"
+                  class="btn btn-primary btn-sm mt-2"
+                >
+                  Remove from Cart
+                </button>
               </div>
               <p class="mt-2">
                 Subtotal: {{ item.quantity * item.unitPrice | currency: "USD" }}
@@ -38,7 +69,10 @@
               <p>Items in cart: {{ totalItems }}</p>
 
               <p>Shipping: FREE</p>
-              <p>Total: {{ totalPrice }}</p>
+              <p>Total: {{ totalPrice.toFixed(2) }}</p>
+              <div>
+                <a routerLink="/checkout" class="btn btn-primary">Checkout</a>
+              </div>
             </td>
           </tr>
         </table>
