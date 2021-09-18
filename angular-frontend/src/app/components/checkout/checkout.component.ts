@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 import { OrderFormService } from 'src/app/services/order-form.service';
 import { CustomValidators } from 'src/app/validators/custom-validators';
 
@@ -28,10 +29,12 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private orderFormService: OrderFormService
+    private orderFormService: OrderFormService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
+    this.reviewCartDetails();
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
         firstName: new FormControl('', [
@@ -127,6 +130,15 @@ export class CheckoutComponent implements OnInit {
       console.log(JSON.stringify(data));
       this.countries = data;
     });
+  }
+  
+  reviewCartDetails() {
+    this.cartService.totalItems.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    );
   }
 
   copyShippingAddressToBillingAddress(event: Event) {
