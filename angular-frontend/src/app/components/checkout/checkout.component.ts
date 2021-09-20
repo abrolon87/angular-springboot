@@ -8,6 +8,7 @@ import {
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
+import { CheckoutService } from 'src/app/services/checkout.service';
 import { OrderFormService } from 'src/app/services/order-form.service';
 import { CustomValidators } from 'src/app/validators/custom-validators';
 
@@ -30,7 +31,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private orderFormService: OrderFormService,
-    private cartService: CartService
+    private cartService: CartService,
+    private checkoutService: CheckoutService
   ) {}
 
   ngOnInit(): void {
@@ -202,7 +204,22 @@ export class CheckoutComponent implements OnInit {
 
     if (this.checkoutFormGroup.invalid) {
       this.checkoutFormGroup.markAllAsTouched();
+      return;
     }
+
+    // set up order
+
+    // get cart items
+
+    // cteate orderItems from cartItems
+
+    // set up purchase
+
+    // populate purchase customer 
+    // populate purchase shipping address
+    // populate purchase billing address
+    // populate purchase order and orderItems
+    // call REST API via CheckoutService
     console.log(this.checkoutFormGroup.get('customer')?.value.firstName);
     console.log(this.checkoutFormGroup.get('customer')?.value.lastName);
     console.log(this.checkoutFormGroup.get('customer')?.value.email);
