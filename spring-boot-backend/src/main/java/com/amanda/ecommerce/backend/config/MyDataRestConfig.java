@@ -1,10 +1,8 @@
 package com.amanda.ecommerce.backend.config;
 
 
-import com.amanda.ecommerce.backend.entity.Country;
-import com.amanda.ecommerce.backend.entity.Product;
-import com.amanda.ecommerce.backend.entity.ProductCategory;
-import com.amanda.ecommerce.backend.entity.State;
+import com.amanda.ecommerce.backend.entity.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -22,6 +20,9 @@ import java.util.Set;
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 
+    @Value("${allowed.origins}")
+    private String[] allowedOrigins;
+
     private EntityManager entityManager;
 
     @Autowired
@@ -31,7 +32,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        HttpMethod[] unsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
+        HttpMethod[] unsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE, HttpMethod.PATCH};
 
         //Makes Product repo READ ONLY
         disableHttpMethods(Product.class, config, unsupportedActions);
@@ -45,8 +46,14 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         //Makes State repo READ ONLY
         disableHttpMethods(State.class, config, unsupportedActions);
 
+        //Makes Order repo READ ONLY
+        disableHttpMethods(Order.class, config, unsupportedActions);
+
         // call internal helper method
         exposeIds(config);
+
+        // configure cors mapping
+        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
     }
 
     private void disableHttpMethods(Class klass, RepositoryRestConfiguration config, HttpMethod[] unsupportedActions) {

@@ -11,7 +11,21 @@ export class CartService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalItems: Subject<number> = new BehaviorSubject<number>(0);
 
-  constructor() {}
+  // sessionStorage data does not persist after a tab has been closed
+  storage: Storage = sessionStorage; // given to us for free
+  // localStorage data persists after closing a tab and survives browser restarts
+  // storage: Storage = localStorage; // given to us for free
+  constructor() {
+
+    // read data from storage
+    let data = JSON.parse(this.storage.getItem('cartItems')!);
+
+    if (data != null) {
+      this.cartItems = data;
+      //calculate totals based on data in storage
+      this.calculateCartTotal();
+    }
+  }
 
   addToCart(newItem: CartItem) {
     let alreadyExistsInCart: boolean = false;
@@ -39,6 +53,7 @@ export class CartService {
 
     this.calculateCartTotal();
   }
+
   calculateCartTotal() {
     let totalPriceValue: number = 0;
     let totalItemsValue: number = 0;
@@ -54,7 +69,15 @@ export class CartService {
 
     // log cart data for debugging
     this.logCartData(totalPriceValue, totalItemsValue);
+
+    // persist cart data
+    this.persistCartItems();
   }
+
+  persistCartItems() {
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems)); // storage item is key: value pair of strings
+  }
+
   logCartData(totalPriceValue: number, totalItemsValue: number) {
     console.log('Items in Cart: ');
     for (let item of this.cartItems) {
