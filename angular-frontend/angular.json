@@ -63,9 +63,18 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "qa": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
+         
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -75,6 +84,9 @@
             },
             "development": {
               "browserTarget": "angular-frontend:build:development"
+            },
+            "qa": {
+              "browserTarget": "angular-frontend:build:qa"
             }
           },
           "defaultConfiguration": "development"

@@ -27,4 +27,17 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 Self-Signed Certificate:
-https://github.com/darbyluv2code/fullstack-angular-and-springboot/blob/master/bonus-content/secure-https-communication/openssl-setup.md
+https://github.com/darbyluv2code/fullstack-angular-and-springboot/blob/master/bonus-content/secure-https-communication/openssl-setup.md   
+
+
+export $(cat .env | xargs)
+
+to run dev:
+npm start
+
+to run prod:
+npm start -- --configuration=production
+
+to run qa:
+npm start -- --configuration=qa
+* Error: undefined:3738:49: missing '}' *
